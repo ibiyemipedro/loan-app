@@ -4,10 +4,7 @@
       <div class="col-lg-6">
         <div class="copyright text-center text-lg-left text-muted">
           © {{ year }}
-          <a
-            href="https://www.creative-tim.com"
-            class="font-weight-bold ml-1"
-            target="_blank"
+          <a class="font-weight-bold ml-1" target="_blank"
             >Blusalt Financials</a
           >
         </div>
@@ -17,20 +14,10 @@
           class="nav nav-footer justify-content-center justify-content-lg-end"
         >
           <li class="nav-item">
-            <a
-              href="https://www.creative-tim.com/presentation"
-              class="nav-link"
-              target="_blank"
-              >About Us</a
-            >
+            <a class="nav-link" target="_blank">About Us</a>
           </li>
           <li class="nav-item">
-            <a
-              href="https://www.creative-tim.com/blog"
-              class="nav-link"
-              target="_blank"
-              >Contact Us</a
-            >
+            <a class="nav-link" target="_blank">Contact Us</a>
           </li>
         </ul>
       </div>

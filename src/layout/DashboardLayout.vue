@@ -1,10 +1,6 @@
 <template>
   <div class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
-    <side-bar
-      :background-color="sidebarBackground"
-      short-title="Argon"
-      title="Argon"
-    >
+    <side-bar :background-color="sidebarBackground">
       <template v-slot:links>
         <sidebar-item
           :link="{
@@ -16,43 +12,15 @@
         <sidebar-item
           :link="{
             name: 'Mandates',
-            icon: 'ni ni-planet text-blue',
-            path: '/icons',
+            icon: 'ni ni-money-coins text-blue',
+            path: '/mandate',
           }"
         />
         <sidebar-item
           :link="{
             name: 'Transactions',
             icon: 'ni ni-planet text-blue',
-            path: '/icons',
-          }"
-        />
-        <sidebar-item
-          :link="{
-            name: 'Icons',
-            icon: 'ni ni-planet text-blue',
-            path: '/icons',
-          }"
-        />
-        <sidebar-item
-          :link="{
-            name: 'Maps',
-            icon: 'ni ni-pin-3 text-orange',
-            path: '/maps',
-          }"
-        />
-        <sidebar-item
-          :link="{
-            name: 'User Profile',
-            icon: 'ni ni-single-02 text-yellow',
-            path: '/profile',
-          }"
-        />
-        <sidebar-item
-          :link="{
-            name: 'Tables',
-            icon: 'ni ni-bullet-list-67 text-red',
-            path: '/tables',
+            path: '/transaction',
           }"
         />
       </template>

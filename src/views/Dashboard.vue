@@ -76,16 +76,44 @@
           <card header-classes="bg-transparent">
             <div class="row">
               <div class="col-xs-12 col-md-6">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae
-                eum aliquid corrupti dolorem, cupiditate quibusdam eaque.
-                Veritatis consequatur rem corporis suscipit quo, saepe autem
-                quae alias quos, doloribus reiciendis? Aliquam.
+                <h4>CREATE MANDATE</h4>
+                <div class="row">
+                  <div class="col-2">
+                    <i class="ni ni-money-coins ni-3x"></i>
+                  </div>
+                  <div class="col-10">
+                    Set up permission to take payments from your customers bank
+                    accounts. The safest and most trusted method of collecting
+                    recurring payments.
+                  </div>
+                </div>
+                <base-button
+                  type="default"
+                  class="mt-4"
+                  @click="mandateModal = true"
+                >
+                  Create Direct Debit Mandate
+                </base-button>
               </div>
               <div class="col-xs-12 col-md-6">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae
-                eum aliquid corrupti dolorem, cupiditate quibusdam eaque.
-                Veritatis consequatur rem corporis suscipit quo, saepe autem
-                quae alias quos, doloribus reiciendis? Aliquam.
+                <h4>DEBIT INSTRUCTION</h4>
+                <div class="row">
+                  <div class="col-2">
+                    <i class="ni ni-credit-card ni-3x"></i>
+                  </div>
+                  <div class="col-10">
+                    Set up permission to take payments from your customers bank
+                    accounts. The safest and most trusted method of collecting
+                    recurring payments.
+                  </div>
+                </div>
+                <base-button
+                  type="default"
+                  class="mt-4"
+                  @click="debitInstructionModal = true"
+                >
+                  Set Debit Instruction
+                </base-button>
               </div>
             </div>
           </card>
@@ -95,7 +123,9 @@
           <card header-classes="bg-transparent">
             <template v-slot:header>
               <div class="row align-items-center">
-                <div class="col"></div>
+                <div class="col">
+                  <h6>RECENT ACTIVITIES</h6>
+                </div>
               </div>
             </template>
             <div class="chart-area">
@@ -105,177 +135,194 @@
         </div>
       </div>
       <!-- End charts-->
+      <!-- Modals -->
+      <modal v-model:show="mandateModal">
+        <template v-slot:header>
+          <h4 class="modal-title" id="modal-title-default">
+            CREATE MANDATE SET-UP
+          </h4>
+        </template>
+
+        <div class="row">
+          <div class="col-12">
+            <h6>Name</h6>
+            <base-input
+              placeholder="Enter your name"
+              v-model="fullName"
+            ></base-input>
+          </div>
+          <div class="col-6">
+            <h6>E-mail</h6>
+            <base-input
+              placeholder="name@example.com"
+              v-model="email"
+            ></base-input>
+          </div>
+          <div class="col-6">
+            <h6>Phone Number</h6>
+            <base-input
+              placeholder="2348000000"
+              v-model="phoneNumber"
+            ></base-input>
+          </div>
+          <div class="col-6">
+            <h6>Amount</h6>
+            <base-input
+              placeholder="Enter Amount"
+              v-model="amount"
+            ></base-input>
+          </div>
+          <div class="col-6">
+            <h6>Max Debit</h6>
+            <base-input
+              placeholder="Enter maximum debits"
+              v-model="maxDebits"
+            ></base-input>
+          </div>
+          <div class="col-6">
+            <h6>Bank Code</h6>
+            <base-input placeholder="044" v-model="bankCode"></base-input>
+          </div>
+          <div class="col-6">
+            <h6>Account Number</h6>
+            <base-input
+              placeholder="Enter Account Number"
+              v-model="accountNumber"
+            ></base-input>
+          </div>
+          <div class="col-6">
+            <h6>Start Date</h6>
+            <base-input
+              placeholder="Enter Date"
+              v-model="startDate"
+            ></base-input>
+          </div>
+          <div class="col-6">
+            <h6>End Date</h6>
+            <base-input placeholder="Enter Date" v-model="endDate"></base-input>
+          </div>
+        </div>
+
+        <template v-slot:footer>
+          <base-button type="primary" @click="createDirDebitMandate"
+            >Create Mandate</base-button
+          >
+          <base-button type="link" class="ml-auto" @click="mandateModal = false"
+            >Close
+          </base-button>
+        </template>
+      </modal>
+      <modal v-model:show="debitInstructionModal">
+        <template v-slot:header>
+          <h4 class="modal-title" id="modal-title-default">
+            DEBIT INSTRUCTION SET-UP
+          </h4>
+        </template>
+
+        <div class="row">
+          <div class="col-6">
+            <h6>Mandate ID</h6>
+            <base-input
+              placeholder="Enter Madate ID"
+              v-model="mandateID"
+            ></base-input>
+          </div>
+          <div class="col-6">
+            <h6>Amount</h6>
+            <base-input
+              placeholder="Enter Amount"
+              v-model="fundingAmount"
+            ></base-input>
+          </div>
+          <div class="col-6">
+            <h6>Funding Bank Code</h6>
+            <base-input
+              placeholder="Enter Bank Code"
+              v-model="fundingBankCode"
+            ></base-input>
+          </div>
+          <div class="col-6">
+            <h6>Funding Account</h6>
+            <base-input
+              placeholder="Enter Account"
+              v-model="fundingAccount"
+            ></base-input>
+          </div>
+        </div>
+
+        <template v-slot:footer>
+          <base-button type="primary" @click="createDebitInstruction"
+            >Create Instruction</base-button
+          >
+          <base-button
+            type="link"
+            class="ml-auto"
+            @click="debitInstructionModal = false"
+            >Close
+          </base-button>
+        </template>
+      </modal>
     </div>
   </div>
 </template>
 <script>
-// Charts
-import { ordersChart } from "@/components/Charts/Chart";
-import Chart from "chart.js";
+import axios from "axios";
 
-let chart;
+const baseUrl = "https://direct-debit.blusalt.net";
 
 export default {
   data() {
     return {
-      salesChartID: "salesChart",
-      ordersChartID: "ordersChart",
-      bigLineChart: {
-        allData: [
-          [0, 20, 10, 30, 15, 40, 20, 60, 60],
-          [0, 20, 5, 25, 10, 30, 15, 40, 40],
-        ],
-        activeIndex: 0,
-      },
+      mandateModal: false,
+      debitInstructionModal: false,
+      // set up direct debit mandate
+      fullname: "",
+      email: "",
+      phoneNumber: "",
+      amount: "",
+      maxDebit: "",
+      bankCode: "",
+      accountNumber: "",
+      startDate: "",
+      endDate: "",
+      // set up direct instruction
+      mandateID: "",
+      fundingBankCode: "",
+      fundingAmount: "",
+      fundingAccount: "",
     };
   },
   methods: {
-    initBigChart(index) {
-      chart.destroy();
-      chart = new Chart(
-        document.getElementById(this.salesChartID).getContext("2d"),
-        {
-          type: "line",
-          data: {
-            labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [
-              {
-                label: "Performance",
-                tension: 0.4,
-                borderWidth: 4,
-                borderColor: "#5e72e4",
-                pointRadius: 0,
-                backgroundColor: "transparent",
-                data: this.bigLineChart.allData[index],
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-              display: false,
-            },
-            tooltips: {
-              enabled: true,
-              mode: "index",
-              intersect: false,
-            },
-            scales: {
-              yAxes: [
-                {
-                  barPercentage: 1.6,
-                  gridLines: {
-                    drawBorder: false,
-                    color: "rgba(29,140,248,0.0)",
-                    zeroLineColor: "transparent",
-                  },
-                  ticks: {
-                    padding: 0,
-                    fontColor: "#8898aa",
-                    fontSize: 13,
-                    fontFamily: "Open Sans",
-                  },
-                },
-              ],
-              xAxes: [
-                {
-                  barPercentage: 1.6,
-                  gridLines: {
-                    drawBorder: false,
-                    color: "rgba(29,140,248,0.0)",
-                    zeroLineColor: "transparent",
-                  },
-                  ticks: {
-                    padding: 10,
-                    fontColor: "#8898aa",
-                    fontSize: 13,
-                    fontFamily: "Open Sans",
-                  },
-                },
-              ],
-            },
-            layout: {
-              padding: 0,
-            },
-          },
-        }
+    async createDirDebitMandate() {
+      let requestObject = {
+        name: this.fullname,
+        email: this.email,
+        phone: this.phoneNumber,
+        amount: this.amount,
+        bankCode: this.bankCode,
+        bankAccount: this.accountNumber,
+        maxDebits: this.maxDebit,
+        startDate: this.startDate,
+        endDate: this.endDate,
+      };
+      const response = await axios.post(`${baseUrl}/mandate`, requestObject);
+      console.log("createDirDebitMandate response", response);
+    },
+    async createDebitInstruction() {
+      let requestObject = {
+        mandateId: this.mandateID,
+        amount: this.fundingAmount,
+        fundingAccount: this.fundingAccount,
+        fundingBankCode: this.fundingBankCode,
+      };
+      const response = await axios.post(
+        `${baseUrl}/mandate/debit`,
+        requestObject
       );
-      this.bigLineChart.activeIndex = index;
+      console.log("createDebitInstruction response", response);
     },
   },
-  mounted() {
-    chart = new Chart(
-      document.getElementById(this.salesChartID).getContext("2d"),
-      {
-        type: "line",
-        data: {
-          labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-          datasets: [
-            {
-              label: "Performance",
-              tension: 0.4,
-              borderWidth: 4,
-              borderColor: "#5e72e4",
-              pointRadius: 0,
-              backgroundColor: "transparent",
-              data: this.bigLineChart.allData[1],
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          legend: {
-            display: false,
-          },
-          tooltips: {
-            enabled: true,
-            mode: "index",
-            intersect: false,
-          },
-          scales: {
-            yAxes: [
-              {
-                barPercentage: 1.6,
-                gridLines: {
-                  drawBorder: false,
-                  color: "rgba(29,140,248,0.0)",
-                  zeroLineColor: "transparent",
-                },
-                ticks: {
-                  padding: 0,
-                  fontColor: "#8898aa",
-                  fontSize: 13,
-                  fontFamily: "Open Sans",
-                },
-              },
-            ],
-            xAxes: [
-              {
-                barPercentage: 1.6,
-                gridLines: {
-                  drawBorder: false,
-                  color: "rgba(29,140,248,0.0)",
-                  zeroLineColor: "transparent",
-                },
-                ticks: {
-                  padding: 10,
-                  fontColor: "#8898aa",
-                  fontSize: 13,
-                  fontFamily: "Open Sans",
-                },
-              },
-            ],
-          },
-          layout: {
-            padding: 0,
-          },
-        },
-      }
-    );
-    ordersChart.createChart(this.ordersChartID);
-  },
+  mounted() {},
 };
 </script>
 <style></style>
