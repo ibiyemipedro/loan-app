@@ -145,61 +145,104 @@
 
         <div class="row">
           <div class="col-12">
-            <h6>Name</h6>
-            <base-input
-              placeholder="Enter your name"
-              v-model="fullName"
-            ></base-input>
+            <div class="form-group">
+              <h6>Name</h6>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Fullname"
+                v-model="fullName"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <h6>E-mail</h6>
-            <base-input
-              placeholder="name@example.com"
-              v-model="email"
-            ></base-input>
+            <div class="form-group">
+              <h6>E-mail</h6>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="name@example.com"
+                v-model="email"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <h6>Phone Number</h6>
-            <base-input
-              placeholder="2348000000"
-              v-model="phoneNumber"
-            ></base-input>
+            <div class="form-group">
+              <h6>Phone Number</h6>
+              <!-- <input type="text" class="form-control" /> -->
+              <input
+                type="text"
+                class="form-control"
+                placeholder="2348000000"
+                v-model="phoneNumber"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <h6>Amount</h6>
-            <base-input
-              placeholder="Enter Amount"
-              v-model="amount"
-            ></base-input>
+            <div class="form-group">
+              <h6>Amount</h6>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Amount"
+                v-model="amount"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <h6>Max Debit</h6>
-            <base-input
-              placeholder="Enter maximum debits"
-              v-model="maxDebits"
-            ></base-input>
+            <div class="form-group">
+              <h6>Max Debit</h6>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter maximum debits"
+                v-model="maxDebit"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <h6>Bank Code</h6>
-            <base-input placeholder="044" v-model="bankCode"></base-input>
+            <div class="form-group">
+              <h6>Bank Code</h6>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="044"
+                v-model="bankCode"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <h6>Account Number</h6>
-            <base-input
-              placeholder="Enter Account Number"
-              v-model="accountNumber"
-            ></base-input>
+            <div class="form-group">
+              <h6>Account Number</h6>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Account Number"
+                v-model="accountNumber"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <h6>Start Date</h6>
-            <base-input
-              placeholder="Enter Date"
-              v-model="startDate"
-            ></base-input>
+            <div class="form-group">
+              <h6>Start Date</h6>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Date"
+                v-model="startDate"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <h6>End Date</h6>
-            <base-input placeholder="Enter Date" v-model="endDate"></base-input>
+            <div class="form-group">
+              <h6>End Date</h6>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Date"
+                v-model="endDate"
+              />
+            </div>
           </div>
         </div>
 
@@ -218,35 +261,52 @@
             DEBIT INSTRUCTION SET-UP
           </h4>
         </template>
-
+        <!-- <input type="text" class="form-control" />  -->
         <div class="row">
           <div class="col-6">
-            <h6>Mandate ID</h6>
-            <base-input
-              placeholder="Enter Madate ID"
-              v-model="mandateID"
-            ></base-input>
+            <div class="form-group">
+              <h6>Mandate ID</h6>
+
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Madate ID"
+                v-model="mandateID"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <h6>Amount</h6>
-            <base-input
-              placeholder="Enter Amount"
-              v-model="fundingAmount"
-            ></base-input>
+            <div class="form-group">
+              <h6>Amount</h6>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Amount"
+                v-model="fundingAmount"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <h6>Funding Bank Code</h6>
-            <base-input
-              placeholder="Enter Bank Code"
-              v-model="fundingBankCode"
-            ></base-input>
+            <div class="form-group">
+              <h6>Funding Bank Code</h6>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Bank Code"
+                v-model="fundingBankCode"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <h6>Funding Account</h6>
-            <base-input
-              placeholder="Enter Account"
-              v-model="fundingAccount"
-            ></base-input>
+            <div class="form-group">
+              <h6>Funding Account</h6>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Account"
+                v-model="fundingAccount"
+              />
+            </div>
           </div>
         </div>
 
@@ -276,7 +336,7 @@ export default {
       mandateModal: false,
       debitInstructionModal: false,
       // set up direct debit mandate
-      fullname: "",
+      fullName: "",
       email: "",
       phoneNumber: "",
       amount: "",
@@ -294,32 +354,46 @@ export default {
   },
   methods: {
     async createDirDebitMandate() {
-      let requestObject = {
-        name: this.fullname,
-        email: this.email,
-        phone: this.phoneNumber,
-        amount: this.amount,
-        bankCode: this.bankCode,
-        bankAccount: this.accountNumber,
-        maxDebits: this.maxDebit,
-        startDate: this.startDate,
-        endDate: this.endDate,
-      };
-      const response = await axios.post(`${baseUrl}/mandate`, requestObject);
-      console.log("createDirDebitMandate response", response);
+      try {
+        let requestObject = {
+          name: this.fullName,
+          email: this.email,
+          phone: this.phoneNumber,
+          amount: this.amount,
+          bankCode: this.bankCode,
+          bankAccount: this.accountNumber,
+          maxDebits: this.maxDebit,
+          startDate: this.startDate,
+          endDate: this.endDate,
+        };
+        let headers = {
+          "Content-Type": "application/json",
+        };
+
+        const response = await axios.post(`${baseUrl}/mandate`, requestObject, {
+          headers: headers,
+        });
+        console.log("createDirDebitMandate response", response);
+      } catch (error) {
+        console.log("createDirDebitMandate error", error);
+      }
     },
     async createDebitInstruction() {
-      let requestObject = {
-        mandateId: this.mandateID,
-        amount: this.fundingAmount,
-        fundingAccount: this.fundingAccount,
-        fundingBankCode: this.fundingBankCode,
-      };
-      const response = await axios.post(
-        `${baseUrl}/mandate/debit`,
-        requestObject
-      );
-      console.log("createDebitInstruction response", response);
+      try {
+        let requestObject = {
+          mandateId: this.mandateID,
+          amount: this.fundingAmount,
+          fundingAccount: this.fundingAccount,
+          fundingBankCode: this.fundingBankCode,
+        };
+        const response = await axios.post(
+          `${baseUrl}/mandate/debit`,
+          requestObject
+        );
+        console.log("createDebitInstruction response", response);
+      } catch (error) {
+        console.log("createDebitInstruction error", error);
+      }
     },
   },
   mounted() {},
