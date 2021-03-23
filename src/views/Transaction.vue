@@ -1,73 +1,6 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8">
-      <div class="row">
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Total traffic"
-            type="gradient-red"
-            sub-title="350,897"
-            icon="ni ni-active-40"
-            class="mb-4 mb-xl-0"
-          >
-            <template v-slot:footer>
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Total traffic"
-            type="gradient-orange"
-            sub-title="2,356"
-            icon="ni ni-chart-pie-35"
-            class="mb-4 mb-xl-0"
-          >
-            <template v-slot:footer>
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 12.18%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Sales"
-            type="gradient-green"
-            sub-title="924"
-            icon="ni ni-money-coins"
-            class="mb-4 mb-xl-0"
-          >
-            <template v-slot:footer>
-              <span class="text-danger mr-2">
-                <i class="fa fa-arrow-down"></i> 5.72%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Performance"
-            type="gradient-info"
-            sub-title="49,65%"
-            icon="ni ni-chart-bar-32"
-            class="mb-4 mb-xl-0"
-          >
-            <template v-slot:footer>
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 54.8%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-      </div>
-    </base-header>
+    <BaseHeader2 />
 
     <div class="container-fluid mt--7">
       <!--Charts-->
@@ -92,11 +25,11 @@
                       :data="tableData"
                     >
                       <template v-slot:columns>
-                        <th>Project</th>
-                        <th>Budget</th>
+                        <th>Tranx ID</th>
+                        <th>Amount</th>
                         <th>Status</th>
-                        <th>Users</th>
-                        <th>Completion</th>
+                        <th>Mandate ID</th>
+                        <th>Action</th>
                       </template>
 
                       <template v-slot:default="row">
@@ -217,13 +150,45 @@
   </div>
 </template>
 <script>
-// Charts
-
+import axios from "axios";
+import BaseHeader2 from "../components/BaseHeader2";
+import { useToast } from "vue-toastification";
+const baseUrl = "https://direct-debit.blusalt.net";
+const apiKey =
+  "4e63b51a0f46ba7d6082d01e4655471351c131fe07ad54308296cb88bf350288e73c10d215821207026fef56f2794fb3";
 export default {
+  setup() {
+    const toast = useToast();
+    toast("I'm a toast!");
+    toast.success("My toast content", {
+      timeout: 2000,
+    });
+    return { toast };
+  },
+  components: {
+    BaseHeader2,
+  },
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    async getTransactions() {
+      try {
+        let headers = {
+          "x-api-key": apiKey,
+        };
+        const response = await axios.get(`${baseUrl}/transactions`, {
+          headers,
+        });
+        this.toast.info("Create mandate success", {
+          timeout: 2000,
+        });
+        console.log("createDirDebitMandate response", response);
+      } catch (error) {
+        console.log("createDirDebitMandate error", error);
+      }
+    },
+  },
   mounted() {},
 };
 </script>

@@ -3,11 +3,16 @@ import App from "./App.vue";
 import router from "./router";
 import ArgonDashboard from "./plugins/argon-dashboard";
 import "element-plus/lib/theme-chalk/index.css";
-// import { ClientTable, ServerTable } from "vue-tables-2";
+
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
+const options = {
+  // You can set your default options here
+};
 
 const appInstance = createApp(App);
-// appInstance.use(ClientTable);
-// appInstance.use(ServerTable);
+appInstance.use(Toast, options);
 appInstance.use(router);
 appInstance.use(ArgonDashboard);
 appInstance.mount("#app");
