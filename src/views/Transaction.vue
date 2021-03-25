@@ -27,7 +27,7 @@
                       <template v-slot:columns>
                         <th>Tranx ID</th>
                         <th>Amount</th>
-                        <th>Status</th>
+                        <th>Date Created</th>
                         <th>Mandate ID</th>
                         <th>Action</th>
                       </template>
@@ -35,92 +35,37 @@
                       <template v-slot:default="row">
                         <th scope="row">
                           <div class="media align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                              <img
-                                alt="Image placeholder"
-                                :src="row.item.img"
-                              />
-                            </a>
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">{{
-                                row.item.title
-                              }}</span>
+                            <div class="d-flex align-items-center">
+                              <span class="completion mr-2"
+                                >{{ row.item.requestId.slice(0, 7) }} ...</span
+                              >
+                              <div></div>
                             </div>
                           </div>
                         </th>
-                        <td class="budget">
-                          {{ row.item.budget }}
-                        </td>
+                        <td class="budget">₦ {{ row.item.amount }}</td>
                         <td>
-                          <badge
-                            class="badge-dot mr-4"
-                            :type="row.item.statusType"
-                          >
-                            <i :class="`bg-${row.item.statusType}`"></i>
-                            <span class="status">{{ row.item.status }}</span>
-                          </badge>
-                        </td>
-                        <td>
-                          <div class="avatar-group">
-                            <a
-                              href="#"
-                              class="avatar avatar-sm rounded-circle"
-                              data-toggle="tooltip"
-                              data-original-title="Ryan Tompson"
+                          <div class="d-flex align-items-center">
+                            <span class="completion mr-2">
+                              {{ row.item.createdAt }}</span
                             >
-                              <img
-                                alt="Image placeholder"
-                                src="img/theme/team-1-800x800.jpg"
-                              />
-                            </a>
-                            <a
-                              href="#"
-                              class="avatar avatar-sm rounded-circle"
-                              data-toggle="tooltip"
-                              data-original-title="Romina Hadid"
-                            >
-                              <img
-                                alt="Image placeholder"
-                                src="img/theme/team-2-800x800.jpg"
-                              />
-                            </a>
-                            <a
-                              href="#"
-                              class="avatar avatar-sm rounded-circle"
-                              data-toggle="tooltip"
-                              data-original-title="Alexander Smith"
-                            >
-                              <img
-                                alt="Image placeholder"
-                                src="img/theme/team-3-800x800.jpg"
-                              />
-                            </a>
-                            <a
-                              href="#"
-                              class="avatar avatar-sm rounded-circle"
-                              data-toggle="tooltip"
-                              data-original-title="Jessica Doe"
-                            >
-                              <img
-                                alt="Image placeholder"
-                                src="img/theme/team-4-800x800.jpg"
-                              />
-                            </a>
+                            <div></div>
                           </div>
                         </td>
                         <td>
                           <div class="d-flex align-items-center">
-                            <span class="completion mr-2"
-                              >{{ row.item.completion }}%</span
-                            >
-                            <div>
-                              <base-progress
-                                :type="row.item.statusType"
-                                :show-percentage="false"
-                                class="pt-0"
-                                :value="row.item.completion"
-                              />
-                            </div>
+                            <span class="completion mr-2">{{
+                              row.item.mandateId
+                            }}</span>
+                            <div></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <span class="completion mr-2">{{
+                              row.item.action
+                            }}</span>
+                            <div></div>
                           </div>
                         </td>
                       </template>
@@ -155,40 +100,42 @@ import BaseHeader2 from "../components/BaseHeader2";
 import { useToast } from "vue-toastification";
 const baseUrl = "https://direct-debit.blusalt.net";
 const apiKey =
-  "4e63b51a0f46ba7d6082d01e4655471351c131fe07ad54308296cb88bf350288e73c10d215821207026fef56f2794fb3";
+  "4872539a8cdcc91534f4f118281db5cac0f171fe4c59d046b2eb0fbaf3d59d150d780e0b329e90cdcfd55792ac513490";
 export default {
   setup() {
     const toast = useToast();
-    toast("I'm a toast!");
-    toast.success("My toast content", {
-      timeout: 2000,
-    });
     return { toast };
   },
   components: {
     BaseHeader2,
   },
   data() {
-    return {};
+    return {
+      tableData: [],
+    };
   },
   methods: {
     async getTransactions() {
       try {
         let headers = {
+          "Content-Type": "application/json",
           "x-api-key": apiKey,
         };
         const response = await axios.get(`${baseUrl}/transactions`, {
           headers,
         });
-        this.toast.info("Create mandate success", {
+        this.toast.info("get transaction success", {
           timeout: 2000,
         });
-        console.log("createDirDebitMandate response", response);
+        console.log("get transaction  response", response);
+        this.tableData = response.data.data;
       } catch (error) {
-        console.log("createDirDebitMandate error", error);
+        console.log("get transaction  error", error);
       }
     },
   },
-  mounted() {},
+  mounted() {
+    this.getTransactions();
+  },
 };
 </script>

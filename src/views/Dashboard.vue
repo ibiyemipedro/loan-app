@@ -179,9 +179,9 @@
         </div>
 
         <template v-slot:footer>
-          <base-button type="primary" @click="createDirDebitMandate"
-            >Create Mandate</base-button
-          >
+          <button class="btn btn-default" @click="createDirDebitMandate">
+            Create Mandate
+          </button>
           <base-button type="link" class="ml-auto" @click="mandateModal = false"
             >Close
           </base-button>
@@ -243,9 +243,9 @@
         </div>
 
         <template v-slot:footer>
-          <base-button type="primary" @click="createDebitInstruction"
-            >Create Instruction</base-button
-          >
+          <button class="btn btn-default" @click="createDebitInstruction">
+            Create Instruction
+          </button>
           <base-button
             type="link"
             class="ml-auto"
@@ -264,15 +264,11 @@ import { useToast } from "vue-toastification";
 
 const baseUrl = "https://direct-debit.blusalt.net";
 const apiKey =
-  "4e63b51a0f46ba7d6082d01e4655471351c131fe07ad54308296cb88bf350288e73c10d215821207026fef56f2794fb3";
+  "4872539a8cdcc91534f4f118281db5cac0f171fe4c59d046b2eb0fbaf3d59d150d780e0b329e90cdcfd55792ac513490";
 
 export default {
   setup() {
     const toast = useToast();
-    toast("I'm a toast!");
-    toast.success("My toast content", {
-      timeout: 2000,
-    });
     return { toast };
   },
   components: {
@@ -319,13 +315,19 @@ export default {
         const response = await axios.post(`${baseUrl}/mandate`, requestObject, {
           headers,
         });
-
+        this.mandateModal = false;
         this.toast.info("Create mandate success", {
           timeout: 2000,
         });
 
         console.log("createDirDebitMandate response", response);
       } catch (error) {
+        this.toast.error("Could not create mandate", {
+          timeout: 2000,
+        });
+        this.toast.info(error.message, {
+          timeout: 2000,
+        });
         console.log("createDirDebitMandate error", error);
       }
     },
@@ -341,8 +343,15 @@ export default {
           `${baseUrl}/mandate/debit`,
           requestObject
         );
+        this.toast.info(response.data.message, {
+          timeout: 2000,
+        });
+
         console.log("createDebitInstruction response", response);
       } catch (error) {
+        this.toast.info(error.message, {
+          timeout: 2000,
+        });
         console.log("createDebitInstruction error", error);
       }
     },
